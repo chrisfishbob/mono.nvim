@@ -970,7 +970,14 @@ require('lazy').setup({
       require('bufferline').setup {}
     end,
   },
-
+  {
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+     config = function()
+      vim.diagnostic.config({virtual_text = false})
+      -- vim.diagnostic.config({virtual_lines = true})
+      require("lsp_lines").setup()
+    end,
+  }
   -- Custom plugins end
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
