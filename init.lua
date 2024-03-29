@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -825,8 +825,8 @@ require('lazy').setup({
     opts = {
       color_overrides = {
         mocha = {
-          base = '#323030',
-          mantle = '#323030',
+          base = '#282626',
+          mantle = '#282626',
         },
       },
     },
