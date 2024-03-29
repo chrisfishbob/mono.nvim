@@ -1,20 +1,19 @@
-# kickstart.nvim
+# mono.nvim
 
 ## Introduction
 
-A starting point for Neovim that is:
+A fully-featured IDE replacement for Neovim that is:
 
-* Small
+* Small...ish
 * Single-file
 * Completely Documented
-
-**NOT** a Neovim distribution, but instead a starting point for your configuration.
+* Based on kickstart.nvim
 
 ## Installation
 
 ### Install Neovim
 
-Kickstart.nvim targets *only* the latest
+mono.nvim targets *only* the latest
 ['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest
 ['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim.
 If you are experiencing issues, please make sure you have the latest versions.
@@ -46,7 +45,7 @@ Neovim's configurations are located under the following paths, depending on your
 | Windows (cmd)| `%userprofile%\AppData\Local\nvim\` |
 | Windows (powershell)| `$env:USERPROFILE\AppData\Local\nvim\` |
 
-### Install Kickstart
+### Install Mono.nvim
 
 #### Recommended Step
 
@@ -58,9 +57,9 @@ fork to your machine using one of the commands below, depending on your OS.
 
 > **NOTE**
 > Your fork's url will be something like this:
-> `https://github.com/<your_github_username>/kickstart.nvim.git`
+> `https://github.com/<your_github_username>/mono.nvim.git`
 
-#### Clone kickstart.nvim
+#### Clone mono.nvim
 > **NOTE**
 > If following the recommended step above (i.e., forking the repo), replace
 > `nvim-lua` with `<your_github_username>` in the commands below
@@ -68,7 +67,7 @@ fork to your machine using one of the commands below, depending on your OS.
 <details><summary> Linux and Mac </summary>
 
 ```sh
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+git clone https://github.com/chrisfishbob/mono.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 ```
 
 </details>
@@ -78,13 +77,13 @@ git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HO
 If you're using `cmd.exe`:
 
 ```
-git clone https://github.com/nvim-lua/kickstart.nvim.git %userprofile%\AppData\Local\nvim\
+git clone https://github.com/chrisfishbob/mono.nvim.git %userprofile%\AppData\Local\nvim\
 ```
 
 If you're using `powershell.exe`
 
 ```
-git clone https://github.com/nvim-lua/kickstart.nvim.git $env:USERPROFILE\AppData\Local\nvim\
+git clone https://github.com/chrisfishbob/mono.nvim.git $env:USERPROFILE\AppData\Local\nvim\
 ```
 
 </details>
@@ -181,24 +180,17 @@ return {
     to maintain multiple configurations. For example, you can install the kickstart
     configuration in `~/.config/nvim-kickstart` and create an alias:
     ```
-    alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
+    alias nvim-mono='NVIM_APPNAME="nvim-mono" nvim'
     ```
-    When you run Neovim using `nvim-kickstart` alias it will use the alternative
+    When you run Neovim using `nvim-mono` alias it will use the alternative
     config directory and the matching local directory
-    `~/.local/share/nvim-kickstart`. You can apply this approach to any Neovim
+    `~/.local/share/nvim-mono`. You can apply this approach to any Neovim
     distribution that you would like to try out.
-* What if I want to "uninstall" this configuration:
-  * See [lazy.nvim uninstall](https://github.com/folke/lazy.nvim#-uninstalling) information
-* Why is the kickstart `init.lua` a single file? Wouldn't it make sense to split it into multiple files?
-  * The main purpose of kickstart is to serve as a teaching tool and a reference
-    configuration that someone can easily use to `git clone` as a basis for their own.
-    As you progress in learning Neovim and Lua, you might consider splitting `init.lua`
-    into smaller parts. A fork of kickstart that does this while maintaining the 
-    same functionality is available here:
-    * [kickstart-modular.nvim](https://github.com/dam9000/kickstart-modular.nvim)
-  * Discussions on this topic can be found here:
-    * [Restructure the configuration](https://github.com/nvim-lua/kickstart.nvim/issues/218)
-    * [Reorganize init.lua into a multi-file setup](https://github.com/nvim-lua/kickstart.nvim/pull/473)
+* What if I want to uninstall this configuration?
+  * Step 1: Delete `init.lua`
+  * Step 2: Profit
+* Why is the mono `init.lua` a single file? Wouldn't it make sense to split it into multiple files?
+  * This is a config file, not your Java 8 enterprise app.
 
 ### Install Recipes
 
