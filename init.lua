@@ -1015,7 +1015,7 @@ require('lazy').setup({
 })
 
 -- Set default colorscheme
-vim.cmd.colorscheme 'tokyonight'
+vim.cmd.colorscheme 'catppuccin'
 
 -- Display tabs as 4 spaces
 vim.opt.tabstop = 4
