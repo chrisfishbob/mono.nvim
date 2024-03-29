@@ -100,6 +100,7 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.opt.number = true
+vim.opt.relativenumber = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
@@ -602,16 +603,16 @@ require('lazy').setup({
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        return {
-          timeout_ms = 500,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
-        }
-      end,
+      -- format_on_save = function(bufnr)
+      --   -- Disable "format_on_save lsp_fallback" for languages that don't
+      --   -- have a well standardized coding style. You can add additional
+      --   -- languages here or re-enable it for the disabled ones.
+      --   local disable_filetypes = { c = true, cpp = true }
+      --   return {
+      --     timeout_ms = 2000,
+      --     lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+      --   }
+      -- end,
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
@@ -680,18 +681,17 @@ require('lazy').setup({
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert {
           -- Select the [n]ext item
-          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<Tab>'] = cmp.mapping.select_next_item(),
           -- Select the [p]revious item
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-          -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<Cr>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -740,10 +740,10 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
 
       -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
+      -- vim.cmd.hi 'Comment gui=none'
     end,
   },
 
@@ -817,6 +817,161 @@ require('lazy').setup({
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     end,
   },
+  -- Start of non Kickstart plugins
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    opts = {
+      color_overrides = {
+        mocha = {
+          base = '#323030',
+          mantle = '#323030',
+        },
+      },
+    },
+    init = function()
+      -- Load the colorscheme here.
+      -- Like many other themes, this one has different styles, and you could load
+      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+      vim.cmd.colorscheme 'catppuccin'
+    end,
+  },
+  {
+    'windwp/nvim-autopairs',
+    -- Optional dependency
+    dependencies = { 'hrsh7th/nvim-cmp' },
+    config = function()
+      require('nvim-autopairs').setup {}
+      -- If you want to automatically add `(` after selecting a function or method
+      local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+      local cmp = require 'cmp'
+      cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    end,
+  },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    version = '*',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+    },
+    config = function()
+      require('neo-tree').setup {}
+      vim.keymap.set('n', '<leader>e', '<Cmd>Neotree toggle<Cr>', { desc = 'Move focus to the left window' })
+    end,
+  },
+  -- Autosave
+  {
+    'Pocco81/auto-save.nvim',
+    config = function()
+      require('auto-save').setup {}
+    end,
+  },
+  -- Undotree
+  {
+    'mbbill/undotree',
+    config = function()
+      vim.keymap.set('n', '<leader>u', '<Cmd>UndotreeToggle<Cr>')
+    end,
+  },
+  -- Auto PEP 8 indent
+  { 'Vimjas/vim-python-pep8-indent' },
+  -- Toggle comments
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+      -- add any options here
+    },
+    lazy = false,
+  },
+  -- Toggle comments with support for embedded languages
+  {
+    'JoosepAlviste/nvim-ts-context-commentstring',
+  },
+  -- Harpoon
+  {
+    'ThePrimeagen/harpoon',
+    keys = {
+      { '<leader>a', "<cmd>lua require('harpoon.mark').add_file()<cr>" },
+      { '<leader>m', "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>" },
+      { '<leader>1', "<cmd>lua require('harpoon.ui').nav_file(1)<cr>" },
+      { '<leader>2', "<cmd>lua require('harpoon.ui').nav_file(2)<cr>" },
+      { '<leader>3', "<cmd>lua require('harpoon.ui').nav_file(3)<cr>" },
+      { '<leader>4', "<cmd>lua require('harpoon.ui').nav_file(4)<cr>" },
+      { '<leader>5', "<cmd>lua require('harpoon.ui').nav_file(5)<cr>" },
+      { '<leader>6', "<cmd>lua require('harpoon.ui').nav_file(6)<cr>" },
+      { '<leader>7', "<cmd>lua require('harpoon.ui').nav_file(7)<cr>" },
+      { '<leader>8', "<cmd>lua require('harpoon.ui').nav_file(8)<cr>" },
+      { '<leader>9', "<cmd>lua require('harpoon.ui').nav_file(9)<cr>" },
+    },
+  },
+  -- Fully featured in-browser markdown preview
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+  },
+  -- Quick in-vim markdown preview
+  { 'ellisonleao/glow.nvim', config = true, cmd = 'Glow' },
+  -- Jump everywhere with zero cognitive overhead
+  {
+    'ggandor/leap.nvim',
+    dependencies = 'tpope/vim-repeat',
+    config = function()
+      -- Remove the LSP binding for 's' and 'S', because they conflict with Leap
+      vim.keymap.set({ 'n', 'x', 'o' }, 's', '<Plug>(leap-forward)')
+      vim.keymap.set({ 'n', 'x', 'o' }, 'S', '<Plug>(leap-backward)')
+      vim.keymap.set({ 'n', 'x', 'o' }, 'gs', '<Plug>(leap-from-window)')
+    end,
+  },
+  -- Eyeliner: move faster with unique f/F indicators
+  {
+    'jinh0/eyeliner.nvim',
+    config = function()
+      require('eyeliner').setup {
+        highlight_on_key = true, -- show highlights only after keypress
+        dim = false, -- dim all other characters if set to true (recommended!)
+      }
+    end,
+  },
+  -- Displays hex and other colors
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup {
+        'css',
+        'javascript',
+        'html',
+        'lua',
+      }
+    end,
+  },
+  -- Easily insert surround characters such as "this", (this), or {this}
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup()
+    end,
+  },
+  {
+    'akinsho/bufferline.nvim',
+    version = '*',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      vim.keymap.set('n', '<C-n>', '<Cmd>BufferLineCycleNext<CR>')
+      vim.keymap.set('n', '<C-p>', '<Cmd>BufferLineCyclePrev<CR>')
+      require('bufferline').setup {}
+    end,
+  },
+
+  -- Custom plugins end
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -859,5 +1014,15 @@ require('lazy').setup({
   },
 })
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+-- Set default colorscheme
+vim.cmd.colorscheme 'tokyonight'
+
+-- Display tabs as 4 spaces
+vim.opt.tabstop = 4
+
+-- Center the cursor when jumping to end of file
+vim.keymap.set('n', 'G', 'Gzz')
+
+-- Move blocks of text while in visual mode
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
