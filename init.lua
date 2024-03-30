@@ -893,8 +893,17 @@ require('lazy').setup({
   {
     'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     config = function()
+      -- Turn off the default error display
       vim.diagnostic.config { virtual_text = false }
       require('lsp_lines').setup()
+
+      local toggle = function()
+        require('lsp_lines').toggle()
+        local new_value = not vim.diagnostic.config().virtual_text
+        vim.diagnostic.config { virtual_text = new_value }
+      end
+
+      vim.keymap.set('', '<Leader>ll', toggle, { desc = 'Toggle lsp_lines' })
     end,
   },
   {
