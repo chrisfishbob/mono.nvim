@@ -7,7 +7,7 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
--- Enables true color support 
+-- Enables true color support
 vim.opt.termguicolors = true
 
 -- [[ Setting options ]]
@@ -515,9 +515,19 @@ require('lazy').setup({
       }
     end,
   },
-
-  { -- Autoformat
+  -- Autoformat
+  {
     'stevearc/conform.nvim',
+    keys = {
+      {
+        '<leader>lf',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = 'Format buffer',
+      },
+    },
     opts = {
       notify_on_error = false,
       -- format_on_save = function(bufnr)
@@ -533,7 +543,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
@@ -541,7 +551,6 @@ require('lazy').setup({
       },
     },
   },
-
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
@@ -889,17 +898,29 @@ require('lazy').setup({
     end,
   },
   {
-   'folke/trouble.nvim',
-   dependencies = { 'nvim-tree/nvim-web-devicons' },
-   -- Lua
+    'folke/trouble.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    -- Lua
     config = function()
-      vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
-      vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
-      vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
-      vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
-      vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
-      vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
-    end
+      vim.keymap.set('n', '<leader>xx', function()
+        require('trouble').toggle()
+      end)
+      vim.keymap.set('n', '<leader>xw', function()
+        require('trouble').toggle 'workspace_diagnostics'
+      end)
+      vim.keymap.set('n', '<leader>xd', function()
+        require('trouble').toggle 'document_diagnostics'
+      end)
+      vim.keymap.set('n', '<leader>xq', function()
+        require('trouble').toggle 'quickfix'
+      end)
+      vim.keymap.set('n', '<leader>xl', function()
+        require('trouble').toggle 'loclist'
+      end)
+      vim.keymap.set('n', 'gR', function()
+        require('trouble').toggle 'lsp_references'
+      end)
+    end,
   },
 
   -- Custom plugins end
