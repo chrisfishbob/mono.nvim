@@ -743,7 +743,7 @@ require('lazy').setup({
       color_overrides = {
         mocha = {
           base = '#282626',
-          mantle = '#282626',
+          mantle = '#343232',
         },
       },
     },
@@ -888,6 +888,20 @@ require('lazy').setup({
       require('lsp_lines').setup()
     end,
   },
+  {
+   'folke/trouble.nvim',
+   dependencies = { 'nvim-tree/nvim-web-devicons' },
+   -- Lua
+    config = function()
+      vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+      vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+      vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+      vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+      vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+      vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+    end
+  },
+
   -- Custom plugins end
   -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
 }, {
