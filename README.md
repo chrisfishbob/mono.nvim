@@ -190,7 +190,7 @@ return {
   * Step 1: Delete `init.lua`
   * Step 2: Profit
 * Why is the mono `init.lua` a single file? Wouldn't it make sense to split it into multiple files?
-  * This is a config file, not your Java 8 enterprise app.
+  * This is a config file, not your Java 8 enterprise app (jk)
 
 ### Install Recipes
 
@@ -267,3 +267,8 @@ sudo dnf install -y gcc make git ripgrep fd-find neovim
 ```
 </details>
 
+### TODO
+This Neovim config is not finished (insert shocked Pikachu meme), here's what's coming next (probably)  
+* Debugger
+* Git integration
+* Auto LSP detection
