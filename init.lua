@@ -153,10 +153,20 @@ require('lazy').setup({
   -- Use `opts = {}` to force a plugin to be loaded.
   --
   --  This is equivalent to:
-  --    require('Comment').setup({})
+  --    require('PluginName').setup({})
 
-  -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      -- Disabling missing-fields diagnostic: the provided options override the default fields,
+      -- no need to re-define them
+      ---@diagnostic disable-next-line: missing-fields
+      require('Comment').setup { opleader = {
+        line = '<leader>/',
+        block = '<leader>b/',
+      } }
+    end,
+  },
 
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
@@ -798,14 +808,6 @@ require('lazy').setup({
   },
   -- Auto PEP 8 indent
   { 'Vimjas/vim-python-pep8-indent' },
-  -- Toggle comments
-  {
-    'numToStr/Comment.nvim',
-    opts = {
-      -- add any options here
-    },
-    lazy = false,
-  },
   -- Toggle comments with support for embedded languages
   {
     'JoosepAlviste/nvim-ts-context-commentstring',
