@@ -159,12 +159,18 @@ require('lazy').setup({
     'numToStr/Comment.nvim',
     config = function()
       -- Disabling missing-fields diagnostic: the provided options override the default fields,
-      -- no need to re-define them
+      -- no need to redefine them
       ---@diagnostic disable-next-line: missing-fields
-      require('Comment').setup { opleader = {
-        line = '<leader>/',
-        block = '<leader>b/',
-      } }
+      require('Comment').setup {
+        opleader = {
+          line = '<leader>c',
+          block = '<leader>bc',
+        },
+        toggler = {
+          line = '<leader>c',
+          block = '<leader>bc',
+        },
+      }
     end,
   },
 
