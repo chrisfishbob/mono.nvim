@@ -1116,3 +1116,7 @@ vim.keymap.set('n', 'G', 'Gzz')
 -- Move blocks of text while in visual mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+
+-- Quickly navigate the quickfix menu
+vim.keymap.set('n', '<C-j>', "<Cmd>cnext<Cr>")
+vim.keymap.set('n', '<C-k>', "<Cmd>cprev<Cr>")
