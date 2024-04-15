@@ -514,6 +514,8 @@ require('lazy').setup({
         'black', -- Used to format Python code
         'flake8', -- Used to lint Python code
         'isort', -- Used to sort Python imports
+        'debugpy', -- Used for Python debugging
+        'delve', -- Used for Go debugging
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -1014,6 +1016,7 @@ require('lazy').setup({
 
       -- Add your own debuggers here
       'leoluz/nvim-dap-go',
+      'mfussenegger/nvim-dap-python',
     },
     config = function()
       local dap = require 'dap'
@@ -1027,13 +1030,6 @@ require('lazy').setup({
         -- You can provide additional configuration to the handlers,
         -- see mason-nvim-dap README for more information
         handlers = {},
-
-        -- You'll need to check that you have the required things installed
-        -- online, please don't ask me how to install them :)
-        ensure_installed = {
-          -- Update this to ensure that you have the debuggers for the langs you want
-          'delve',
-        },
       }
 
       -- Basic debugging keymaps, feel free to change to your liking!
@@ -1077,6 +1073,12 @@ require('lazy').setup({
 
       -- Install golang specific config
       require('dap-go').setup()
+
+      -- Python specific setup for dap-python
+      -- If your debugpy installation lives elsewhere, change this path, otherwise, just use
+      -- this default Mason path.
+      local debugpy_path = vim.fn.stdpath 'data' .. '/mason/packages/debugpy/venv/bin/python3'
+      require('dap-python').setup(debugpy_path)
     end,
   },
   -- Custom plugins end
@@ -1118,5 +1120,5 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
 -- Quickly navigate the quickfix menu
-vim.keymap.set('n', '<C-j>', "<Cmd>cnext<Cr>")
-vim.keymap.set('n', '<C-k>', "<Cmd>cprev<Cr>")
+vim.keymap.set('n', '<C-j>', '<Cmd>cnext<Cr>')
+vim.keymap.set('n', '<C-k>', '<Cmd>cprev<Cr>')
