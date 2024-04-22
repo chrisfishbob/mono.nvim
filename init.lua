@@ -519,6 +519,7 @@ require('lazy').setup({
         'isort', -- Used to sort Python imports
         'debugpy', -- Used for Python debugging
         'delve', -- Used for Go debugging
+        'codelldb', -- Used for C/C++/Rust debugging
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -1041,6 +1042,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>so', dap.step_over, { desc = 'Debug: Step Over' })
       vim.keymap.set('n', '<leader>sO', dap.step_out, { desc = 'Debug: Step Out' })
       vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+      vim.keymap.set('n', '<leader>dq', dapui.close, { desc = 'Debug: Quit UI' })
       vim.keymap.set('n', '<leader>B', function()
         dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
       end, { desc = 'Debug: Set Breakpoint' })
@@ -1082,6 +1084,31 @@ require('lazy').setup({
       -- this default Mason path.
       local debugpy_path = vim.fn.stdpath 'data' .. '/mason/packages/debugpy/venv/bin/python3'
       require('dap-python').setup(debugpy_path)
+
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = vim.fn.stdpath 'data' .. '/mason/packages/codelldb/codelldb',
+          args = { '--port', '${port}' },
+
+          -- On Windows you may have to uncomment this
+          -- detached = false
+        },
+      }
+      dap.configurations.c = {
+        {
+          name = 'Launch file',
+          type = 'codelldb',
+          request = 'launch',
+          program = function()
+            local exe_path = vim.fn.getcwd() .. '/'
+            return vim.fn.input('Path to executable: ' .. exe_path)
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+        },
+      }
     end,
   },
   -- Custom plugins end
