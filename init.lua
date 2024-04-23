@@ -163,12 +163,12 @@ require('lazy').setup({
     config = function()
       require('Comment').setup {
         opleader = {
-          line = '<leader>c',
-          block = '<leader>bc',
+          line = '<leader>/',
+          block = '<leader>b/',
         },
         toggler = {
-          line = '<leader>c',
-          block = '<leader>bc',
+          line = '<leader>/',
+          block = '<leader>b/',
         },
       }
     end,
@@ -312,13 +312,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
+      vim.keymap.set('n', '<leader>cb', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
         })
-      end, { desc = '[/] Fuzzily search in current buffer' })
+      end, { desc = 'Fuzzily search in [C]urrent [B]uffer' })
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
