@@ -1111,6 +1111,8 @@ require('lazy').setup({
       }
     end,
   },
+  -- NOTE: These are the AI plugins, not yet well-configured and integrated, 
+  -- with the rest of the configs, but it is very usable (requires subscription)
   -- {
   --   'github/copilot.vim',
   -- },
