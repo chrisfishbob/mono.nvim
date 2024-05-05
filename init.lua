@@ -286,7 +286,11 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        pickers = {
+          colorscheme = {
+            enable_preview = true,
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -310,6 +314,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>cs', '<Cmd>Telescope colorscheme<Cr>', { desc = '[C]olor[S]cheme' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>cb', function()
@@ -1113,7 +1118,7 @@ require('lazy').setup({
       }
     end,
   },
-  -- NOTE: These are the AI plugins, not yet well-configured and integrated, 
+  -- NOTE: These are the AI plugins, not yet well-configured and integrated,
   -- with the rest of the configs, but it is very usable (requires subscription)
   -- {
   --   'github/copilot.vim',
