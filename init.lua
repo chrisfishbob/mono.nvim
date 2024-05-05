@@ -773,10 +773,12 @@ require('lazy').setup({
     opts = {
       color_overrides = {
         mocha = {
-          base = '#282626',
-          mantle = '#343232',
+          -- NOTE: Uncomment if not using transparent_background
+          -- base = '#282626',
+          -- mantle = '#343232',
         },
       },
+      transparent_background = true,
     },
   },
   {
