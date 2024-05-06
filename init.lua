@@ -1133,14 +1133,17 @@ require('lazy').setup({
     event = 'BufReadPre', -- this will only start session saving when an actual file was opened
     opts = {
       -- add any custom options here
+      pre_save = function()
+        require('neo-tree.command').execute { action = 'close' }
+      end,
     },
-    config = function()
-      require('persistence').setup()
+    config = function(_, opts)
+      require('persistence').setup(opts)
       -- restore the session for the current directory
-      vim.api.nvim_set_keymap('n', '<leader>rs', '<Cmd>lua require("persistence").load()<Cr>', {desc = '[R]estore [S]ession'})
+      vim.api.nvim_set_keymap('n', '<leader>rs', '<Cmd>lua require("persistence").load()<Cr>', { desc = '[R]estore [S]ession' })
 
       -- restore the last session
-      vim.api.nvim_set_keymap('n', '<leader>rl', '<Cmd>lua require("persistence").load({ last = true })<Cr>', {desc = '[R]estore [L]ast Session'})
+      vim.api.nvim_set_keymap('n', '<leader>rl', '<Cmd>lua require("persistence").load({ last = true })<Cr>', { desc = '[R]estore [L]ast Session' })
     end,
   },
   -- NOTE: These are the AI plugins, not yet well-configured and integrated,
