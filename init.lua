@@ -1128,6 +1128,21 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>o', '<Cmd>Oil --float . <Cr>', { desc = 'Open [O]il' })
     end,
   },
+  {
+    'folke/persistence.nvim',
+    event = 'BufReadPre', -- this will only start session saving when an actual file was opened
+    opts = {
+      -- add any custom options here
+    },
+    config = function()
+      require('persistence').setup()
+      -- restore the session for the current directory
+      vim.api.nvim_set_keymap('n', '<leader>rs', '<Cmd>lua require("persistence").load()<Cr>', {desc = '[R]estore [S]ession'})
+
+      -- restore the last session
+      vim.api.nvim_set_keymap('n', '<leader>rl', '<Cmd>lua require("persistence").load({ last = true })<Cr>', {desc = '[R]estore [L]ast Session'})
+    end,
+  },
   -- NOTE: These are the AI plugins, not yet well-configured and integrated,
   -- with the rest of the configs, but it is very usable (requires subscription)
   -- {
