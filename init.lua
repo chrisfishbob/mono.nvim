@@ -1118,6 +1118,16 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('oil').setup()
+      vim.keymap.set('n', '<leader>o', '<Cmd>Oil --float . <Cr>', { desc = 'Open [O]il' })
+    end,
+  },
   -- NOTE: These are the AI plugins, not yet well-configured and integrated,
   -- with the rest of the configs, but it is very usable (requires subscription)
   -- {
