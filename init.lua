@@ -477,7 +477,12 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--offset-encoding=utf-16',
+          },
+        },
         gopls = {},
         pyright = {},
         rust_analyzer = {},
@@ -1137,10 +1142,10 @@ require('lazy').setup({
     config = function()
       require('persistence').setup()
       -- restore the session for the current directory
-      vim.api.nvim_set_keymap('n', '<leader>rs', '<Cmd>lua require("persistence").load()<Cr>', {desc = '[R]estore [S]ession'})
+      vim.api.nvim_set_keymap('n', '<leader>rs', '<Cmd>lua require("persistence").load()<Cr>', { desc = '[R]estore [S]ession' })
 
       -- restore the last session
-      vim.api.nvim_set_keymap('n', '<leader>rl', '<Cmd>lua require("persistence").load({ last = true })<Cr>', {desc = '[R]estore [L]ast Session'})
+      vim.api.nvim_set_keymap('n', '<leader>rl', '<Cmd>lua require("persistence").load({ last = true })<Cr>', { desc = '[R]estore [L]ast Session' })
     end,
   },
   -- NOTE: These are the AI plugins, not yet well-configured and integrated,
