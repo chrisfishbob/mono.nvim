@@ -792,6 +792,12 @@ require('lazy').setup({
     },
   },
   {
+    'alligator/accent.vim',
+    config = function()
+      vim.g.accent_colour = 'magenta'
+    end
+  },
+  {
     'windwp/nvim-autopairs',
     -- Optional dependency
     dependencies = { 'hrsh7th/nvim-cmp' },
